@@ -2,14 +2,7 @@
 
 import * as React from "react"
 import {
-  Home,
-  BookOpenText,
-  Heart,
-  Star,
   Command,
-  LifeBuoy,
-  Send,
-  Settings2,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -24,67 +17,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { data } from "@/lib/data"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Home",
-      url: "#",
-      icon: Home,
-    },
-    {
-      title: "Mis historias",
-      url: "#",
-      icon: BookOpenText,
-    },
-    {
-      title: "Me gusta",
-      url: "#",
-      icon: Heart,
-    },
-    {
-      title: "Favoritos",
-      url: "#",
-      icon: Star,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-}
+
 
 export function AppSidebar({
   ...props
