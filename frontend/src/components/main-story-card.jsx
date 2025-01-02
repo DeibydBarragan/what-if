@@ -9,6 +9,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { GalleryHorizontalEnd } from 'lucide-react';
 import Link from 'next/link';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
   
 
 const MainStoryCard = ({ user }) => {
@@ -28,10 +29,19 @@ const MainStoryCard = ({ user }) => {
                             </Avatar>
                             <span className="truncate text-lg text-muted-foreground">{user.name}</span>
                         </div>
-                        <div className='flex gap-2 items-center'>
-                            <span className="text-lg text-muted-foreground">5</span>
-                            <GalleryHorizontalEnd className="size-6" />
-                        </div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <div className='flex gap-2 items-center'>
+                                        <span className="text-lg text-muted-foreground">5</span>
+                                        <GalleryHorizontalEnd className="size-6" />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent side='right'>
+                                <p>5 tarjetas</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
                     </div>
                 </CardContent>
             </Card>
