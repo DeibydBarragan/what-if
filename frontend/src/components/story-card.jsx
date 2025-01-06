@@ -14,9 +14,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 
 const StoryCard = ({ setIsShowingCard, isShowingCard }) => {
-  
+
   const handleClick = () => {
     setIsShowingCard(!isShowingCard)
+  }
+
+  const handleDialogClick = (e) => {
+    e.stopPropagation()
   }
 
   return (
@@ -26,8 +30,8 @@ const StoryCard = ({ setIsShowingCard, isShowingCard }) => {
         <CardHeader>
             <CardDescription>Card content</CardDescription>
         </CardHeader>
-        <CardContent>
-            <div className='flex justify-end items-center'>
+        <CardContent className='flex justify-end'>
+            <div className='flex justify-end items-center w-fit' onClick={handleDialogClick}>
               <Dialog>
                   <TooltipProvider>
                     <Tooltip>
