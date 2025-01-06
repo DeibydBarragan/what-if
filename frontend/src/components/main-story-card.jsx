@@ -17,8 +17,8 @@ const MainStoryCard = ({ user }) => {
         <Link href="/story/1">
             <Card className="hover:shadow-lg hover:scale-105 transition-all duration-150 ease-in-out">
                 <CardHeader>
-                    <CardTitle>Card Title</CardTitle>
-                    <CardDescription>Card Description</CardDescription>
+                    <CardTitle>Story Title</CardTitle>
+                    <CardDescription>Story Description</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className='flex justify-between items-center'>
