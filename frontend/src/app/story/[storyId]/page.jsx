@@ -1,14 +1,16 @@
 'use client'
 import { CardsCarousel } from '@/components/cards-carousel';
+import CreateCardForm from '@/components/create-card-form';
 import StoryCard from '@/components/story-card';
-import { data } from '@/lib/data';
-import React, { use, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import React, { useState } from 'react';
 
 const Page = ({ params }) => {
 
-  const { storyId } = use(params)
-
   const [isShowingCard, setIsShowingCard] = useState(false)
+
+  const [cards, setCards] = useState([])
 
   return (
     <>
@@ -19,13 +21,27 @@ const Page = ({ params }) => {
       </div>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-          <StoryCard user={data.user} setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>
-          <StoryCard user={data.user} setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>
-          <StoryCard user={data.user} setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>
-          <StoryCard user={data.user} setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>
-          <StoryCard user={data.user} setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>
+          {cards.map((card) => (
+            <StoryCard key={card.id} card={card} setIsShowingCard={setIsShowingCard} />
+          ))}
         </div>
       </div>
+      <Dialog>
+        <DialogTrigger>
+          <Button className="absolute bottom-8 right-8 text-5xl size-16 rounded-full" size="icon">
+            +
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Crear nueva tarjeta</DialogTitle>
+            <DialogDescription>
+              Crea una nueva tarjeta
+            </DialogDescription>
+          </DialogHeader>
+          <CreateCardForm cards={cards} setCards={setCards} />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

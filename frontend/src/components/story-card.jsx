@@ -7,13 +7,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { Split } from 'lucide-react';
+import { Plus, Split } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import CreateWhatIfForm from './create-what-if-form';
 
-const StoryCard = ({ setIsShowingCard, isShowingCard }) => {
+const StoryCard = ({ card, setIsShowingCard, isShowingCard }) => {
 
   const handleClick = () => {
     setIsShowingCard(!isShowingCard)
@@ -28,22 +29,22 @@ const StoryCard = ({ setIsShowingCard, isShowingCard }) => {
       onClick={handleClick}
     >
         <CardHeader>
-            <CardDescription>Card content</CardDescription>
+            <CardDescription>{card.content}</CardDescription>
         </CardHeader>
         <CardContent className='flex justify-end'>
-            <div className='flex justify-end items-center w-fit' onClick={handleDialogClick}>
+            <div className='flex justify-end items-center w-fit gap-2' onClick={handleDialogClick}>
               <Dialog>
                   <TooltipProvider>
                     <Tooltip>
                       <DialogTrigger>
                         <TooltipTrigger>
                           <Button variant='outline' className='flex gap-2 items-center'>
-                            <span className="text-lg text-muted-foreground">5</span>
+                            <span className="text-lg text-muted-foreground">{card.whatIfs.length}</span>
                             <Split className="size-6" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent side='left'>
-                          <p>5 What Ifs</p>
+                          <p>{card.whatIfs.length} what if's</p>
                         </TooltipContent>
                       </DialogTrigger>
                     </Tooltip>
@@ -120,6 +121,23 @@ const StoryCard = ({ setIsShowingCard, isShowingCard }) => {
                       </CardHeader>
                     </Card>
                   </Link>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger>
+                  <Button size="icon" variant="outline">
+                    <Plus />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Crear What If</DialogTitle>
+                    <DialogDescription>
+                      Crea un What If en este punto de la historia
+                    </DialogDescription>
+                  </DialogHeader>
+                  <CreateWhatIfForm />
                 </DialogContent>
               </Dialog>
             </div>
