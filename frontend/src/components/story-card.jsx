@@ -14,10 +14,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import CreateWhatIfForm from './create-what-if-form';
 
-const StoryCard = ({ card, setIsShowingCard, isShowingCard }) => {
+const StoryCard = ({ card, setActualCard }) => {
 
   const handleClick = () => {
-    setIsShowingCard(!isShowingCard)
+    setActualCard(card.id)
   }
 
   const handleDialogClick = (e) => {

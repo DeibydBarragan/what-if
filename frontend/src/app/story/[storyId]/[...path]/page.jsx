@@ -1,4 +1,5 @@
 'use client'
+import { CardsCarousel } from '@/components/cards-carousel';
 import CreateCardForm from '@/components/create-card-form';
 import StoryCard from '@/components/story-card';
 import { Button } from '@/components/ui/button';
@@ -14,9 +15,11 @@ const Page = () => {
 
   const [cards, setCards] = useState([])
 
+  const [actualCard, setActualCard] = useState(null)
+
   return (
     <>
-      {isShowingCard && <CardsCarousel setIsShowingCard={setIsShowingCard} isShowingCard={isShowingCard}/>}
+      {actualCard && <CardsCarousel cards={cards} setActualCard={setActualCard} actualCard={actualCard}/>}
       <div>
         <h1>What if Page</h1>
         {pathName}
@@ -24,7 +27,7 @@ const Page = () => {
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {cards.map((card) => (
-            <StoryCard key={card.id} card={card} setIsShowingCard={setIsShowingCard} />
+            <StoryCard key={card.id} card={card} setActualCard={setActualCard} />
           ))}
         </div>
       </div>

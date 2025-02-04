@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/carousel"
 import { useEffect, useState } from "react"
  
-export function CardsCarousel({ setIsShowingCard, isShowingCard }) {
+export function CardsCarousel({ cards, setActualCard, actualCard }) {
   const [api, setApi] = useState()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
 
   const handleBackgroundClick = () => {
-    setIsShowingCard(!isShowingCard)
+    setActualCard(null)
   }
 
   const handleClick = (e) => {
@@ -45,11 +45,11 @@ export function CardsCarousel({ setIsShowingCard, isShowingCard }) {
       >
         <Carousel setApi={setApi}>
           <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index}>
+            {cards.map((card) => (
+              <CarouselItem key={card.id}>
                 <Card>
                   <CardContent className="flex items-center justify-center p-6 aspect-square">
-                    <span className="text-4xl font-semibold">{index + 1}</span>
+                    <span className="text-4xl font-semibold">{card.content}</span>
                   </CardContent>
                 </Card>
               </CarouselItem>
