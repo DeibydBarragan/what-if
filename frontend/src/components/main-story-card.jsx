@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import {
     Card,
@@ -12,13 +13,13 @@ import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
   
 
-const MainStoryCard = ({ story }) => {
+const MainStoryCard = ({ id, title, description, length }) => {
     return (
-        <Link href="/story/1">
+        <Link href={"/story/"+id}>
             <Card className="hover:shadow-lg hover:scale-105 transition-all duration-150 ease-in-out">
                 <CardHeader>
-                    <CardTitle>{story.title}</CardTitle>
-                    <CardDescription>{story.description}</CardDescription>
+                    <CardTitle>{title}</CardTitle>
+                    <CardDescription>{description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className='flex justify-between items-center'>
@@ -33,12 +34,12 @@ const MainStoryCard = ({ story }) => {
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <div className='flex gap-2 items-center'>
-                                        <span className="text-lg text-muted-foreground">{story.cards.length}</span>
+                                        <span className="text-lg text-muted-foreground">{length}</span>
                                         <GalleryHorizontalEnd className="size-6" />
                                     </div>
                                 </TooltipTrigger>
                                 <TooltipContent side='right'>
-                                <p>{story.cards.length} cards</p>
+                                <p>{length} cards</p>
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>

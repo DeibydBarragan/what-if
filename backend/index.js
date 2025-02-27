@@ -1,17 +1,20 @@
-const { NaryTree, NaryTreeNode } = require('./classes/NaryTreeNode');
+const { NaryTree, NaryTreeNode } = require('./classes/NaryTreeNode')
 const HashTable = require('./classes/HashTable')
 const Story = require('./classes/Story')
 const Card = require('./classes/Card')
 const express = require('express');
-const WhatIf = require('./classes/WhatIf');
+const WhatIf = require('./classes/WhatIf')
 const app = express()
-const port = 3000
+const cors = require("cors");
+const port = 3001
+
+// Habilita CORS para todos los dominios
+app.use(cors());
 
 // Middleware para procesar JSON en el body
 app.use(express.json());
 
 const stories = new HashTable()
-//stories.set('a', new NaryTree(new Story('root', 'root')))
 
 // Obtiene todas las historias
 app.get('/api/stories', (req, res) => {
@@ -19,6 +22,18 @@ app.get('/api/stories', (req, res) => {
   const storiesObject = Object.fromEntries(storiesArray) // O(N)
   console.log(stories.values())
   res.status(200).json(storiesObject)
+});
+
+// Obtiene todas las historias
+app.get('/api/story', (req, res) => {
+  const direction = req.query.dir.split('/')
+  console.log(direction[0])
+  const story = stories.get(parseInt(direction[0]))
+  let node = story.root
+  if (direction.length === 1) {
+    res.status(200).json(node)
+    return
+  }
 });
 
 // Guarda una historia
@@ -33,7 +48,7 @@ app.post('/api/stories', (req, res) => {
   res.status(200).json({ message: 'Historia guardada' })
 })
 
-// Guarda una carta en historia
+// Guarda una carta o what if en una historia
 app.post('/api/stories/child', (req, res) => {
   let newObject
 
