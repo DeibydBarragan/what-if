@@ -6,6 +6,7 @@ import {
   LifeBuoy,
   Send,
   Settings2,
+  GitBranch
 } from "lucide-react"
 
 export const data = {
@@ -19,6 +20,11 @@ export const data = {
       title: "Home",
       url: "/home",
       icon: Home,
+    },
+    {
+      title: "Graph",
+      url: "/graph",
+      icon: GitBranch,
     },
     {
       title: "Mis historias",

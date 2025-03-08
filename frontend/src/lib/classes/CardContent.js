@@ -1,7 +1,5 @@
 export default class CardContent {
-  constructor(id, content, whatIfs) {
-    this.id = id;
+  constructor(content) {
     this.content = content;
-    this.whatIfs = whatIfs;
   }
 }

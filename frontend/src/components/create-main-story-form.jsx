@@ -5,22 +5,30 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import MainStory from '@/lib/classes/MainStory';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import axios from "axios";
+import { Loader2 } from "lucide-react"
 
-const CreateMainStoryForm = ({mainStories, setMainStories}) => {
-  const router = useRouter();
+const CreateMainStoryForm = ({fetchStories}) => {
+  const [buttonLoading, setButtonLoading] = useState(false)
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
+    setButtonLoading(true)
     const formData = new FormData(e.target)
-    const id = mainStories.length + 1
-    const userId = 1
     const title = formData.get('title')
     const description = formData.get('description')
-    const cards = []
-    const newStory = new MainStory(id, title, description, userId, cards)
-    setMainStories([...mainStories, newStory])
-    router.push(`/story/${id}`)
+    const newStory = new MainStory(title, description)
+    try {
+      const response = await axios.post("http://localhost:3001/api/stories", newStory);
+
+      await fetchStories()
+  
+      console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+      console.error("Error en la petición:", error);
+    }
+    setButtonLoading(false)
   }
 
   return (
@@ -38,9 +46,17 @@ const CreateMainStoryForm = ({mainStories, setMainStories}) => {
           <Textarea id="description" name="description" required/>
         </div>
         {/* SUBMIT */}
-        <Button type="submit" className="w-full">
-          Crear historia
-        </Button>
+        {buttonLoading ? (
+            <Button disabled>
+              <Loader2 className="animate-spin" />
+            </Button>
+          ) : (
+            
+            <Button type="submit" className="w-full">
+              Crear historia
+            </Button>
+          )
+        }
       </div>
     </form>
   );

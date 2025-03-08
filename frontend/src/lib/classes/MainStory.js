@@ -1,5 +1,6 @@
-import Story from "./Story";
-
-export default class MainStory extends Story {
-
+export default class MainStory {
+  constructor(title, description) {
+    this.title = title;
+    this.description = description;
+  }
 }

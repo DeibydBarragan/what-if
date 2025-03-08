@@ -1,5 +1,7 @@
-import Story from "./Story";
-
-export default class WhatIf extends Story {
-
+export default class WhatIf {
+  constructor(title, description) {
+    this.isWhatIf = true;
+    this.title = title;
+    this.description = description;
+  }
 }

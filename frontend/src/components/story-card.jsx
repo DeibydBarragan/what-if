@@ -8,16 +8,16 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Plus, Split } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from './ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import CreateWhatIfForm from './create-what-if-form';
 
-const StoryCard = ({ card, setActualCard }) => {
+const StoryCard = ({ id, card, setActualCard, dir, setDir, setIsShowingCard }) => {
 
   const handleClick = () => {
-    setActualCard(card.id)
+    setActualCard(id)
+    setIsShowingCard(true)
   }
 
   const handleDialogClick = (e) => {
@@ -29,7 +29,7 @@ const StoryCard = ({ card, setActualCard }) => {
       onClick={handleClick}
     >
         <CardHeader>
-            <CardDescription>{card.content}</CardDescription>
+            <CardDescription>{card.value.content}</CardDescription>
         </CardHeader>
         <CardContent className='flex justify-end'>
             <div className='flex justify-end items-center w-fit gap-2' onClick={handleDialogClick}>
@@ -39,12 +39,12 @@ const StoryCard = ({ card, setActualCard }) => {
                       <DialogTrigger>
                         <TooltipTrigger>
                           <Button variant='outline' className='flex gap-2 items-center'>
-                            <span className="text-lg text-muted-foreground">{card.whatIfs.length}</span>
+                            <span className="text-lg text-muted-foreground">{card.children.length}</span>
                             <Split className="size-6" />
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent side='left'>
-                          <p>{card.whatIfs.length} what if's</p>
+                          <p>{card.children.length} what if's</p>
                         </TooltipContent>
                       </DialogTrigger>
                     </Tooltip>
@@ -57,70 +57,20 @@ const StoryCard = ({ card, setActualCard }) => {
                     </DialogDescription>
                   </DialogHeader>
                   {/* What Ifs list /> */}
-                  <Link href="1/1">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                  <Link href="/home">
-                    <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out'>
-                      <CardHeader className='flex'>
-                        <CardTitle>Titulo del What If</CardTitle>
-                        <CardDescription>Descripcion</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
+                  {
+                    card.children.map((whatIf, index) => (
+                      <div key={index} onClick={() => {
+                        setDir([...dir, id, index])
+                      }}>
+                        <Card className='hover:bg-primary-foreground transition-all duration-150 ease-in-out cursor-pointer'>
+                          <CardHeader className='flex'>
+                            <CardTitle>{whatIf.value.title}</CardTitle>
+                            <CardDescription>{whatIf.value.description}</CardDescription>
+                          </CardHeader>
+                        </Card>
+                      </div>
+                    ))
+                  }
                 </DialogContent>
               </Dialog>
 
@@ -137,7 +87,7 @@ const StoryCard = ({ card, setActualCard }) => {
                       Crea un What If en este punto de la historia
                     </DialogDescription>
                   </DialogHeader>
-                  <CreateWhatIfForm />
+                  <CreateWhatIfForm id={id} dir={dir} setDir={setDir} />
                 </DialogContent>
               </Dialog>
             </div>

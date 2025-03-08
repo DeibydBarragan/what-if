@@ -1,26 +1,42 @@
 import WhatIf from '@/lib/classes/WhatIf';
-import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
+import { useState } from 'react';
+import axios from "axios";
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
+import { useMainStoriesContext } from '@/context/MainStoriesContext';
+import { Loader2 } from 'lucide-react';
 
-const CreateWhatIfForm = () => {
-  const router = useRouter()
-  const pathName = usePathname()
+const CreateWhatIfForm = ({ id }) => {
 
-  const handleOnSubmit = (e) => {
+  const { dir, setDir, fetchStories } = useMainStoriesContext()
+  const [buttonLoading, setButtonLoading] = useState(false)
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const id = 1
-    const userId = 1
     const title = formData.get('title')
     const description = formData.get('description')
-    const cards = []
-    const newWhatIf = new WhatIf(id, title, description, userId, cards)
-    console.log(pathName)
-    router.push(`${pathName}/${id}`)
+    const newWhatIf = new WhatIf(title, description)
+
+    setButtonLoading(true)
+
+    try {
+      const url = `http://localhost:3001/api/stories/child?dir=${dir.join("/")}/${id}`
+      console.log(url)
+  
+      const response = await axios.post(url, newWhatIf)
+
+      await fetchStories()
+
+      console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+      console.error("Error en la petición:", error);
+    }
+    setButtonLoading(false)
+    
   }
 
   return (
@@ -38,9 +54,17 @@ const CreateWhatIfForm = () => {
           <Textarea id="description" name="description" required/>
         </div>
         {/* SUBMIT */}
-        <Button type="submit" className="w-full">
-          Crear What If
-        </Button>
+        {buttonLoading ? (
+            <Button disabled>
+              <Loader2 className="animate-spin" />
+            </Button>
+          ) : (
+            
+            <Button type="submit" className="w-full">
+              Crear What If
+            </Button>
+          )
+        }
       </div>
     </form>
   );

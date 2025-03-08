@@ -13,10 +13,10 @@ import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
   
 
-const MainStoryCard = ({ id, title, description, length }) => {
+const MainStoryCard = ({ id, title, description, length, setDir }) => {
     return (
-        <Link href={"/story/"+id}>
-            <Card className="hover:shadow-lg hover:scale-105 transition-all duration-150 ease-in-out">
+        <div onClick={() => setDir([id])}>
+            <Card className="hover:shadow-lg hover:scale-105 transition-all duration-150 ease-in-out cursor-pointer">
                 <CardHeader>
                     <CardTitle>{title}</CardTitle>
                     <CardDescription>{description}</CardDescription>
@@ -46,7 +46,7 @@ const MainStoryCard = ({ id, title, description, length }) => {
                     </div>
                 </CardContent>
             </Card>
-        </Link>
+        </div>
     );
 }
 
